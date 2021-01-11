@@ -21,11 +21,11 @@ struct ContentView: View {
                         .padding()
                     
                     Button(action: {
-                        NavigationLink(
-                            destination: /*@START_MENU_TOKEN@*/Text("Destination")/*@END_MENU_TOKEN@*/,
-                            label: {
-                                /*@START_MENU_TOKEN@*/Text("Navigate")/*@END_MENU_TOKEN@*/
-                            })
+//                        NavigationLink(
+//                            destination: /*@START_MENU_TOKEN@*/Text("Destination")/*@END_MENU_TOKEN@*/,
+//                            label: {
+//                                /*@START_MENU_TOKEN@*/Text("Navigate")/*@END_MENU_TOKEN@*/
+//                            })
                     }
                            ,label: {
                         Text("Begin!")
