@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var fields : [[Field]] = .init(repeating: .init(repeating: Field(player: "", enabled: true), count: 3 ), count: 3)
+    @State var fields : [[Field]] = .init(repeating: .init(repeating: Field(player: "", enabled: true), count: 5 ), count: 5)
     // i think this has some thing to do with creating the blocks for X O
-    /* there is another wa of typing the above, check recording
+    /* there is another way of typing the above, check recording
      @State var fields : [[Field]]((repeating: Field(player: "", enabled: true),count: 3),
      [Field] (repeating: Field(player: "", enabled: true), count: 3))
      */
@@ -25,9 +25,9 @@ struct ContentView: View {
             Text("\(playerTurn)'s turn my brudda!")
                 .font(.largeTitle)
             
-            ForEach(0..<3){ r in
+            ForEach(0..<5){ r in
                 HStack(spacing: 10){
-                    ForEach(0..<3){ c in 
+                    ForEach(0..<5){ c in
                         Button(action:
                                 {
                                     if fields [r][c].enabled
@@ -57,10 +57,9 @@ struct ContentView: View {
                                         Text(fields[r][c].player)
                                             .font(.system(size: 60))
                                             .foregroundColor(.black)
-                                            .frame(width: 90, height: 90, alignment: .center)
+                                            .frame(width: 70, height: 70, alignment: .center)
                                             .background(Color.white)
                                     })
-                        
                     }
                 }
             }
@@ -70,6 +69,10 @@ struct ContentView: View {
                        label:{
                         Text("Play Again?")
                             .font(.largeTitle)
+                            .frame(width: 300, height: 70, alignment: .center)
+                            .foregroundColor(.white)
+                            .background(Color.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                        }).padding()
             }
         }.background(Color.gray) // if i put it black YOU WON'T SEE THE TEXT!
@@ -81,27 +84,42 @@ struct ContentView: View {
     
     func checkWinner()
     {
-        for i in 0..<3 {
-                    var isRowWinner = true
-                    var isColWinner = true
-                    for j in 0..<3 {
-                        isRowWinner = isRowWinner && fields[i][j].player == playerTurn
-                        isColWinner = isColWinner && fields[j][i].player == playerTurn
-                    }
-                    if isRowWinner || isColWinner {
-                        winner = ("\(playerTurn) is the winner!")
-                        winStatus = true
-                    }
-                }
-                
-                let d1 = fields[0][0].player == playerTurn
-                    && fields[1][1].player == playerTurn
-                    && fields[2][2].player == playerTurn
-
-                let d2 = fields[0][2].player == playerTurn
-                    && fields[1][1].player == playerTurn
-                    && fields[2][0].player == playerTurn
-                
+        var rowCheck, colCheck : Bool // to check rows and column wins
+        // need to change the size of loops according to game size.
+        for i in 0..<5 {
+            rowCheck = true
+            colCheck = true
+            /*looping the true value for row and col to make sure that in case of last column
+             on the right wins when it is marked first, otherwise it will not count the win for the right side column
+             we're also contiously checking from left to right.*/
+            for j in 0..<5 {
+                rowCheck = rowCheck && fields[i][j].player == playerTurn
+                colCheck = colCheck && fields[j][i].player == playerTurn
+            }
+            if rowCheck || colCheck {
+                winner = ("\(playerTurn) is the winner!")
+                winStatus = true
+            }
+        }
+        
+        var d1 = true
+        //loop for first diagonal left->right
+        for i in (0..<5) {
+                d1 = d1 && fields[i][i].player == playerTurn
+        }
+        
+       /* let d1 = fields[0][0].player == playerTurn
+            && fields[1][1].player == playerTurn
+            && fields[2][2].player == playerTurn
+            && fields[3][3].player == playerTurn
+            && fields[4][4].player == playerTurn*/
+        
+        let d2 = fields[0][4].player == playerTurn
+            && fields[1][3].player == playerTurn
+            && fields[2][2].player == playerTurn
+            && fields[3][1].player == playerTurn
+            && fields[4][0].player == playerTurn
+        
         if d1 || d2 {
             winner = ("\(playerTurn) is the winner!")
             winStatus = true
@@ -111,8 +129,8 @@ struct ContentView: View {
     
     // loop to disable all boxes and end game
     func endGame() {
-        for i in 0..<3 {
-            for j in 0..<3 {
+        for i in 0..<5 {
+            for j in 0..<5 {
                 fields[i][j].enabled = false
             }
         }
@@ -120,7 +138,7 @@ struct ContentView: View {
     
     func restartG()
     {
-        fields = .init(repeating: .init(repeating: Field(player: "", enabled: true), count: 3 ), count: 3)
+        fields = .init(repeating: .init(repeating: Field(player: "", enabled: true), count: 5 ), count: 5)
         playerTurn = "X"
         winner = ""
         winStatus = false
@@ -141,56 +159,56 @@ struct Field {
 }
 
 
-
+// size should be 120, 100, 70 for block frames
 
 /* here lies the notes,failed tests and code snippets of my dark depressing trials at making the code quality better...
-  check each row [0][c] [1][c] [2][c]
-         var row = Array(repeating: false, count: 2)
-         var rowcheck = false
+ check each row [0][c] [1][c] [2][c]
+ var row = Array(repeating: false, count: 2)
+ var rowcheck = false
  
-        //i want to use row in a foreach but i don't quite understand how it works just yet.
-        //for k in 0..<3{ // loop for each row
+ //i want to use row in a foreach but i don't quite understand how it works just yet.
+ //for k in 0..<3{ // loop for each row
  
-         for i in 0..<row.count { // loop to check current row
-             for cell in 0..<3 { //loop to take boolean values of each cell
-                 row [i] = fields[0][cell].player == playerTurn
-             }
-         }
-         rowcheck = row.allSatisfy({$0 == true})
-         if rowcheck == true {
-             winner = ("\(playerTurn) is the winner!")
-             winStatus = true
-             //  break
-         }else if drawCounter == 9 {
-             winner = "Draw :("
-             winStatus = true
-             //  break
-         }
-         //}
-       each checks the boolean value of the blocks in that row/column/diagonal
-       player == playerTurn means if they are matching to tell if that row/column/diagonal
-       is occupied by the same player making them the winner
-      let r1 = fields[0][0].player == playerTurn && fields[0][1].player == playerTurn && fields[0][2].player == playerTurn
-      let r2 = fields[1][0].player == playerTurn && fields[1][1].player == playerTurn && fields[1][2].player == playerTurn
-      let r3 = fields[2][0].player == playerTurn && fields[2][1].player == playerTurn && fields[2][2].player == playerTurn
-      
-       check each column [r][0] [r][1] [r][2]
-      let c1 = fields[0][0].player == playerTurn && fields[1][0].player == playerTurn && fields[2][0].player == playerTurn
-      let c2 = fields[0][1].player == playerTurn && fields[1][1].player == playerTurn && fields[2][1].player == playerTurn
-      let c3 = fields[0][2].player == playerTurn && fields[1][2].player == playerTurn && fields[2][2].player == playerTurn
-      
-       check both diagonals (0,0 - 1,1 - 2,2) (0,2 - 1,1 - 2,0)
-      let d1 = fields[0][0].player == playerTurn && fields[1][1].player == playerTurn && fields[2][2].player == playerTurn
-      let d2 = fields[0][2].player == playerTurn && fields[1][1].player == playerTurn && fields[2][0].player == playerTurn
-      
-      can be done in  loop but... trial and error ,which loop, forEach? for? while? WHICH ONE?!?!?! THE NUMBERS MASON!
-      nested for each loops use ij for rows, then ji for columns, use boolean value to define the true false
-      
-      if r1 || r2 || r3 || c1 || c2 || c3 || d1 || d2 {
-      winner = ("\(playerTurn) is the winner!")
-      winStatus = true
-      }else if drawCounter == 9 {
-      winner = "Draw :("
-      winStatus = true
-      }
+ for i in 0..<row.count { // loop to check current row
+ for cell in 0..<3 { //loop to take boolean values of each cell
+ row [i] = fields[0][cell].player == playerTurn
+ }
+ }
+ rowcheck = row.allSatisfy({$0 == true})
+ if rowcheck == true {
+ winner = ("\(playerTurn) is the winner!")
+ winStatus = true
+ //  break
+ }else if drawCounter == 9 {
+ winner = "Draw :("
+ winStatus = true
+ //  break
+ }
+ //}
+ each checks the boolean value of the blocks in that row/column/diagonal
+ player == playerTurn means if they are matching to tell if that row/column/diagonal
+ is occupied by the same player making them the winner
+ let r1 = fields[0][0].player == playerTurn && fields[0][1].player == playerTurn && fields[0][2].player == playerTurn
+ let r2 = fields[1][0].player == playerTurn && fields[1][1].player == playerTurn && fields[1][2].player == playerTurn
+ let r3 = fields[2][0].player == playerTurn && fields[2][1].player == playerTurn && fields[2][2].player == playerTurn
+ 
+ check each column [r][0] [r][1] [r][2]
+ let c1 = fields[0][0].player == playerTurn && fields[1][0].player == playerTurn && fields[2][0].player == playerTurn
+ let c2 = fields[0][1].player == playerTurn && fields[1][1].player == playerTurn && fields[2][1].player == playerTurn
+ let c3 = fields[0][2].player == playerTurn && fields[1][2].player == playerTurn && fields[2][2].player == playerTurn
+ 
+ check both diagonals (0,0 - 1,1 - 2,2) (0,2 - 1,1 - 2,0)
+ let d1 = fields[0][0].player == playerTurn && fields[1][1].player == playerTurn && fields[2][2].player == playerTurn
+ let d2 = fields[0][2].player == playerTurn && fields[1][1].player == playerTurn && fields[2][0].player == playerTurn
+ 
+ can be done in  loop but... trial and error ,which loop, forEach? for? while? WHICH ONE?!?!?! THE NUMBERS MASON!
+ nested for each loops use ij for rows, then ji for columns, use boolean value to define the true false
+ 
+ if r1 || r2 || r3 || c1 || c2 || c3 || d1 || d2 {
+ winner = ("\(playerTurn) is the winner!")
+ winStatus = true
+ }else if drawCounter == 9 {
+ winner = "Draw :("
+ winStatus = true
+ }
  */
