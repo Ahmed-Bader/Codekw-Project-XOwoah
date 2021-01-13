@@ -8,21 +8,27 @@
 import SwiftUI
 
 struct Game: View {
-    
+    /*here we're supposed to receive 3 things:
+     1- size of game
+     2- mark of each player
+     3- drawcount.
+     i don't think i need a board swift file and enums for this.. i need to ask.*/
     @State var fields : [[Field]] = .init(repeating: .init(repeating: Field(player: "", enabled: true), count: 5 ), count: 5)
     // i think this has some thing to do with creating the blocks for X O
     /* there is another way of typing the above, check recording
      @State var fields : [[Field]]((repeating: Field(player: "", enabled: true),count: 3),
      [Field] (repeating: Field(player: "", enabled: true), count: 3))
      */
-    @State var playerTurn : String = "X" //we only need to define one player i guess for this example
+    @State var playerTurn = "X" //might need to make an array with marks for the table
     @State var drawCounter = 0
+        //create constant that equals incoming max draw count.
     @State var winner = ""
     @State var winStatus = false
     
     var body: some View {
         VStack(spacing: 10){
-            Text("\(playerTurn)'s turn my brudda!")
+            
+            Text("\(playerTurn)'s turn!")
                 .font(.largeTitle)
             
             ForEach(0..<5){ r in
@@ -149,6 +155,10 @@ struct Game: View {
 struct Field {
     var player : String // player name/identification
     var enabled : Bool  // to check if box not used
+}
+
+enum PlayerTurn {
+    case one,two,three,four
 }
 
 
