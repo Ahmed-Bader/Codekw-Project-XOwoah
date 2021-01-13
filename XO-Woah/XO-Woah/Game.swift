@@ -19,21 +19,24 @@ struct Game: View {
     var body: some View {
         
         VStack {
-            //switch for the player turn notification
-            switch playerTurn {
-            case .one:
-                Text("X's turn!")
-                    .font(.largeTitle)
-            case .two:
-                Text("O's turn!")
-                    .font(.largeTitle)
-            case .three:
-                Text("🤓's turn!")
-                    .font(.largeTitle)
-            case .four:
-                Text("🥸's turn!")
-                    .font(.largeTitle)
-            }
+            //so who's turn is it?
+            Text(whoPlays(s: size))
+                .font(.largeTitle)
+            
+            /*  switch playerTurn {
+             case .one:
+             Text("X's turn!")
+             .font(.largeTitle)
+             case .two:
+             Text("O's turn!")
+             .font(.largeTitle)
+             case .three:
+             Text("🤓's turn!")
+             .font(.largeTitle)
+             case .four:
+             Text("🥸's turn!")
+             .font(.largeTitle)
+             }*/
             VStack(spacing: 10){
                 ForEach(0..<size){ r in
                     HStack(spacing: 10){
@@ -127,6 +130,63 @@ struct Game: View {
         
     }
     
+    // INCOMING FUNCTIONS!!-----------------------------
+    func whoPlays(s: Int) -> String {
+        if s == 3 {
+            switch playerTurn {
+            case .one:
+                return "X's turn!"
+            case .two:
+                return "O's turn!"
+            default:
+                print("something is wrong with who plays size 3")
+            }
+        } else if s == 4 {
+            switch playerTurn {
+            case .one:
+                return "X's turn!"
+            case .two:
+                return "O's turn!"
+            case .three:
+                return "🤓's turn!"
+            default:
+                print("something is wrong with who plays size 4")
+            }
+        } else if s == 5 {
+            switch playerTurn {
+            case .one:
+                return "X's turn!"
+            case .two:
+                return "O's turn!"
+            case .three:
+                return "🤓's turn!"
+            case .four:
+                return "🥸's turn!"
+            }
+        }
+        return "how did u even get here?"
+    }
+    
+    func whoMarks(s: Int,i: Int,j: Int){
+        if s == 3 {
+            
+        } else if s == 4 {
+            
+        } else if s == 5 {
+            
+        }
+    }
+    
+    func playerSwitcher(s: Int,i: Int,j: Int){
+        if s == 3 {
+            
+        } else if s == 4 {
+            
+        } else if s == 5 {
+            
+        }
+    }
+    
     func checkWinner()
     {
         var rowCheck, colCheck : Bool // to check rows and column wins
@@ -159,7 +219,7 @@ struct Game: View {
          && fields[3][3].player == playerTurn
          && fields[4][4].player == playerTurn*/
         
-        //checking the second diagona right->left
+        //checking the second diagonal right->left
         var d2 = true
         switch size {
         case 3:
@@ -191,7 +251,6 @@ struct Game: View {
         }
     }
     
-    
     // loop to disable all boxes and end game
     func endGame() {
         for i in 0..<size {
@@ -207,7 +266,7 @@ struct Game: View {
         playerTurn = PlayerTurn.one
         p = ""
         winner = ""
-        //winStatus = false
+        // the alert takes care of bool winstatus, if something goes wrong, remove comment winStatus = false
         drawCounter = 0
     }
 }
