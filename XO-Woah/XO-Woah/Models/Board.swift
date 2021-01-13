@@ -9,7 +9,7 @@ import Foundation
 
 
 struct Board: Identifiable {
-    let size : Size  //for the size of the game board (which is going to be 3,4,5)
+    let size : Size  //for the size of the game board (which is going to be 3x3, 4x4, 5x5)
     let mark : String //for the mark that is printed on the button when it is clicked
     let marked : Bool // to enable/disable blocks(buttons) after restarting the game or being tapped respectively
     
@@ -17,5 +17,5 @@ struct Board: Identifiable {
 }
 
 enum Size {
-    case two, three, four, five
+    case two, three, four
 }

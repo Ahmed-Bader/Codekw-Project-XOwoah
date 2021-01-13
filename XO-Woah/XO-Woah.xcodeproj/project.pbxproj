@@ -10,6 +10,7 @@
 		3B556BAC25ACD9AD001976C8 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B556BAB25ACD9AD001976C8 /* Board.swift */; };
 		3B556BB025ACD9C6001976C8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B556BAF25ACD9C6001976C8 /* Player.swift */; };
 		E29B5ACA25AD8C3B0035572E /* code reference.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B5AC925AD8C3B0035572E /* code reference.swift */; };
+		E2AE2F8D25AEEB77001CF687 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AE2F8C25AEEB77001CF687 /* Game.swift */; };
 		E2F6D24425AC3FAB00ED0D53 /* XO_WoahApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F6D24325AC3FAB00ED0D53 /* XO_WoahApp.swift */; };
 		E2F6D24625AC3FAB00ED0D53 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F6D24525AC3FAB00ED0D53 /* ContentView.swift */; };
 		E2F6D24825AC3FAB00ED0D53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2F6D24725AC3FAB00ED0D53 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		3B556BAB25ACD9AD001976C8 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		3B556BAF25ACD9C6001976C8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		E29B5AC925AD8C3B0035572E /* code reference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "code reference.swift"; sourceTree = "<group>"; };
+		E2AE2F8C25AEEB77001CF687 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		E2F6D24025AC3FAB00ED0D53 /* XO-Woah.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XO-Woah.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2F6D24325AC3FAB00ED0D53 /* XO_WoahApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XO_WoahApp.swift; sourceTree = "<group>"; };
 		E2F6D24525AC3FAB00ED0D53 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				3B556BA625ACD2DF001976C8 /* Models */,
 				E2F6D24325AC3FAB00ED0D53 /* XO_WoahApp.swift */,
 				E2F6D24525AC3FAB00ED0D53 /* ContentView.swift */,
+				E2AE2F8C25AEEB77001CF687 /* Game.swift */,
 				E2F6D24725AC3FAB00ED0D53 /* Assets.xcassets */,
 				E2F6D24C25AC3FAC00ED0D53 /* Info.plist */,
 				E29B5AC925AD8C3B0035572E /* code reference.swift */,
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B556BB025ACD9C6001976C8 /* Player.swift in Sources */,
+				E2AE2F8D25AEEB77001CF687 /* Game.swift in Sources */,
 				E2F6D24625AC3FAB00ED0D53 /* ContentView.swift in Sources */,
 				E29B5ACA25AD8C3B0035572E /* code reference.swift in Sources */,
 				E2F6D24425AC3FAB00ED0D53 /* XO_WoahApp.swift in Sources */,

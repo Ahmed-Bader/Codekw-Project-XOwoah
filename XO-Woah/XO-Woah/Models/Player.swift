@@ -14,5 +14,5 @@ struct Player: Identifiable {
 }
 
 enum PlayerTurn {
-    case first, second, third, fourth, fifth
+    case first, second, third, fourth
 }

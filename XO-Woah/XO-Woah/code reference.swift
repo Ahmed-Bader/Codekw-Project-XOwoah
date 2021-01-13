@@ -6,19 +6,7 @@
 //
 
 import Foundation
-// nav link to choose which board size to play.. but that might affect the effective screen size we can utilize
-// so it might not be such a good idea to have a navlink to decide the size of the map
-//struct ContentView: View {
-//    @State var selectedsize = ""
-//    var body: some View {
-//        NavigationView {
-//            List
-//            {
-//
-//            }
-//            }.navigationTitle("X-O-Woah!")
-//        }
-//    }
+
 
 //        VStack {
 //            Text("Welcome to X-O-Woah!")
