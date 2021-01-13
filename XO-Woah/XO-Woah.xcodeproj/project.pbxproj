@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3B556BAC25ACD9AD001976C8 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B556BAB25ACD9AD001976C8 /* Board.swift */; };
 		E29B5ACA25AD8C3B0035572E /* code reference.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29B5AC925AD8C3B0035572E /* code reference.swift */; };
 		E2AE2F8D25AEEB77001CF687 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AE2F8C25AEEB77001CF687 /* Game.swift */; };
 		E2F6D24425AC3FAB00ED0D53 /* XO_WoahApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F6D24325AC3FAB00ED0D53 /* XO_WoahApp.swift */; };
@@ -17,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3B556BAB25ACD9AD001976C8 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		E29B5AC925AD8C3B0035572E /* code reference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "code reference.swift"; sourceTree = "<group>"; };
 		E2AE2F8C25AEEB77001CF687 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		E2F6D24025AC3FAB00ED0D53 /* XO-Woah.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "XO-Woah.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,14 +37,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3B556BA625ACD2DF001976C8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				3B556BAB25ACD9AD001976C8 /* Board.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		E2F6D23725AC3FAB00ED0D53 = {
 			isa = PBXGroup;
 			children = (
@@ -66,7 +56,6 @@
 		E2F6D24225AC3FAB00ED0D53 /* XO-Woah */ = {
 			isa = PBXGroup;
 			children = (
-				3B556BA625ACD2DF001976C8 /* Models */,
 				E2F6D24325AC3FAB00ED0D53 /* XO_WoahApp.swift */,
 				E2F6D24525AC3FAB00ED0D53 /* ContentView.swift */,
 				E2AE2F8C25AEEB77001CF687 /* Game.swift */,
@@ -159,7 +148,6 @@
 				E2F6D24625AC3FAB00ED0D53 /* ContentView.swift in Sources */,
 				E29B5ACA25AD8C3B0035572E /* code reference.swift in Sources */,
 				E2F6D24425AC3FAB00ED0D53 /* XO_WoahApp.swift in Sources */,
-				3B556BAC25ACD9AD001976C8 /* Board.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

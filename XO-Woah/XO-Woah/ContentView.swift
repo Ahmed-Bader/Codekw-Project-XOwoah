@@ -7,12 +7,13 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack{
                 NavigationLink(
-                    destination: /*@START_MENU_TOKEN@*/Text("Destination")/*@END_MENU_TOKEN@*/,
+                    destination: Game(size: 3, drawLimit: 9),
                     label: {
                         Text("2-players")
                             .font(.largeTitle)

@@ -8,126 +8,185 @@
 import SwiftUI
 
 struct Game: View {
-    /*here we're supposed to receive 3 things:
-     1- size of game
-     2- mark of each player
-     3- drawcount.
-     i don't think i need a board swift file and enums for this.. i need to ask.*/
+    let size : Int //size of game board in terms of rows and columns (3,4or5)
+    let drawLimit : Int // max number of turns ( = number of cells )
+    @State var playerTurn = PlayerTurn.one
+    @State var p = ""
     @State var fields : [[Field]] = .init(repeating: .init(repeating: Field(player: "", enabled: true), count: 5 ), count: 5)
-    // i think this has some thing to do with creating the blocks for X O
-    /* there is another way of typing the above, check recording
-     @State var fields : [[Field]]((repeating: Field(player: "", enabled: true),count: 3),
-     [Field] (repeating: Field(player: "", enabled: true), count: 3))
-     */
-    @State var playerTurn = "X" //might need to make an array with marks for the table
     @State var drawCounter = 0
-        //create constant that equals incoming max draw count.
     @State var winner = ""
     @State var winStatus = false
-    
     var body: some View {
-        VStack(spacing: 10){
-            
-            Text("\(playerTurn)'s turn!")
-                .font(.largeTitle)
-            
-            ForEach(0..<5){ r in
-                HStack(spacing: 10){
-                    ForEach(0..<5){ c in
-                        Button(action:
-                                {
-                                    if fields [r][c].enabled
+        
+        VStack {
+            //switch for the player turn notification
+            switch playerTurn {
+            case .one:
+                Text("X's turn!")
+                    .font(.largeTitle)
+            case .two:
+                Text("O's turn!")
+                    .font(.largeTitle)
+            case .three:
+                Text("🤓's turn!")
+                    .font(.largeTitle)
+            case .four:
+                Text("🥸's turn!")
+                    .font(.largeTitle)
+            }
+            VStack(spacing: 10){
+                ForEach(0..<size){ r in
+                    HStack(spacing: 10){
+                        ForEach(0..<size){ c in
+                            Button(action:
                                     {
-                                        fields[r][c].player = playerTurn
-                                        drawCounter += 1
-                                        checkWinner()
-                                        if winStatus == false
+                                        if fields [r][c].enabled
                                         {
-                                            //this needs to change for multi
-                                            playerTurn = playerTurn == "X" ? "O" : "X"
+                                            //fields[r][c].player = playerTurn
+                                            switch playerTurn {
+                                            case .one:
+                                                fields[r][c].player = "X"
+                                                p = fields[r][c].player
+                                            case .two:
+                                                fields[r][c].player = "O"
+                                                p = fields[r][c].player
+                                            case .three:
+                                                fields[r][c].player = "🤓"
+                                                p = fields[r][c].player
+                                            case .four:
+                                                fields[r][c].player = "🥸"
+                                                p = fields[r][c].player
+                                            }
+                                            drawCounter += 1
+                                            checkWinner()
+                                            if winStatus == false
+                                            {
+                                                //this needs to change for multi
+                                                //playerTurn = playerTurn == "X" ? "O" : "X"
+                                                switch playerTurn {
+                                                case .one:
+                                                    p = "O"
+                                                    playerTurn = .two
+                                                case .two:
+                                                    p = "🤓"
+                                                    playerTurn = .three
+                                                case .three:
+                                                    p = "🥸"
+                                                    playerTurn = .four
+                                                case .four:
+                                                    p = "X"
+                                                    playerTurn = .one
+                                                }
+                                                fields[r][c].enabled = false
+                                            }else{
+                                                endGame()
+                                            }
                                             
-                                            /*ternary operator is just like an if statement
-                                             it basically means if playerturn == X put O
-                                             else put X*/
-                                            
-                                            fields[r][c].enabled = false
                                         }
-                                        else
+                                    },label:
                                         {
-                                            endGame()
-                                        }
-                                        
-                                    }
-                                },label:
-                                    {
-                                        Text(fields[r][c].player)
-                                            .font(.system(size: 60))
-                                            .foregroundColor(.black)
-                                            .frame(width: 70, height: 70, alignment: .center)
-                                            .background(Color.white)
-                                    })
+                                            Text(fields[r][c].player)
+                                                .font(.system(size: 60))
+                                                .foregroundColor(.black)
+                                                .frame(width: 70, height: 70, alignment: .center)
+                                                .background(Color.white)
+                                        })
+                        }
                     }
                 }
-            }
+            }.background(Color.gray) // if i put it black YOU WON'T SEE THE TEXT!
+            .padding()
+            
             if winner != "" {
                 Text(winner)
+                    .font(.largeTitle)
                 Button(action: { restartG() },
                        label:{
                         Text("Play Again?")
                             .font(.largeTitle)
-                            .frame(width: 300, height: 70, alignment: .center)
+                            .frame(width: 200, height: 70, alignment: .center)
+                            .foregroundColor(.white)
+                            .background(Color.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                       }).padding()
+            }else{
+                Button(action: { restartG() },
+                       label:{
+                        Text("Reset")
+                            .font(.largeTitle)
+                            .frame(width: 200, height: 70, alignment: .center)
                             .foregroundColor(.white)
                             .background(Color.blue)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                        }).padding()
             }
-        }.background(Color.gray) // if i put it black YOU WON'T SEE THE TEXT!
+        }.background(Color.yellow)
+        .alert(isPresented: $winStatus, content: {
+            Alert(title: Text(winner))
+        })
+        
     }
-    
-    //we put the function inside the scope of view
-    //because we need to check the variables that we created here
-    // once we go out of the scope, r and c don't exist anymore unless they are sent as arguements
     
     func checkWinner()
     {
         var rowCheck, colCheck : Bool // to check rows and column wins
-        // need to change the size of loops according to game size.
-        for i in 0..<5 {
+        //loop for rows and columns
+        for i in 0..<size {
             rowCheck = true
             colCheck = true
             /*looping the true value for row and col to make sure that in case of last column
              on the right wins when it is marked first, otherwise it will not count the win for the right side column
              we're also contiously checking from left to right.*/
-            for j in 0..<5 {
-                rowCheck = rowCheck && fields[i][j].player == playerTurn
-                colCheck = colCheck && fields[j][i].player == playerTurn
+            for j in 0..<size {
+                rowCheck = rowCheck && fields[i][j].player == p
+                colCheck = colCheck && fields[j][i].player == p
             }
             if rowCheck || colCheck {
-                winner = ("\(playerTurn) is the winner!")
+                winner = ("\(p) is the winner!")
                 winStatus = true
             }
         }
         
         var d1 = true
         //loop for first diagonal left->right
-        for i in (0..<5) {
-                d1 = d1 && fields[i][i].player == playerTurn
+        for i in (0..<size) {
+            d1 = d1 && fields[i][i].player == p
         }
         
-       /* let d1 = fields[0][0].player == playerTurn
-            && fields[1][1].player == playerTurn
-            && fields[2][2].player == playerTurn
-            && fields[3][3].player == playerTurn
-            && fields[4][4].player == playerTurn*/
+        /* let d1 = fields[0][0].player == playerTurn
+         && fields[1][1].player == playerTurn
+         && fields[2][2].player == playerTurn
+         && fields[3][3].player == playerTurn
+         && fields[4][4].player == playerTurn*/
         
-        let d2 = fields[0][4].player == playerTurn
-            && fields[1][3].player == playerTurn
-            && fields[2][2].player == playerTurn
-            && fields[3][1].player == playerTurn
-            && fields[4][0].player == playerTurn
+        //checking the second diagona right->left
+        var d2 = true
+        switch size {
+        case 3:
+            d2 = fields[0][2].player == p
+                && fields[1][1].player == p
+                && fields[2][0].player == p
+        case 4:
+            d2 = fields[0][3].player == p
+                && fields[1][2].player == p
+                && fields[2][1].player == p
+                && fields[3][0].player == p
+        case 5:
+            d2 = fields[0][4].player == p
+                && fields[1][3].player == p
+                && fields[2][2].player == p
+                && fields[3][1].player == p
+                && fields[4][0].player == p
+        default:
+            print("d2 didn't work!")
+            d2 = false
+        }
         
         if d1 || d2 {
-            winner = ("\(playerTurn) is the winner!")
+            winner = ("\(p) is the winner!")
+            winStatus = true
+        } else if drawCounter == drawLimit {
+            winner = "Draw :("
             winStatus = true
         }
     }
@@ -135,8 +194,8 @@ struct Game: View {
     
     // loop to disable all boxes and end game
     func endGame() {
-        for i in 0..<5 {
-            for j in 0..<5 {
+        for i in 0..<size {
+            for j in 0..<size {
                 fields[i][j].enabled = false
             }
         }
@@ -144,10 +203,11 @@ struct Game: View {
     
     func restartG()
     {
-        fields = .init(repeating: .init(repeating: Field(player: "", enabled: true), count: 5 ), count: 5)
-        playerTurn = "X"
+        fields = .init(repeating: .init(repeating: Field(player: "", enabled: true), count: size ), count: size)
+        playerTurn = PlayerTurn.one
+        p = ""
         winner = ""
-        winStatus = false
+        //winStatus = false
         drawCounter = 0
     }
 }
@@ -164,7 +224,7 @@ enum PlayerTurn {
 
 struct Game_Previews: PreviewProvider {
     static var previews: some View {
-        Game()
+        Game(size: 3, drawLimit: 9)
     }
 }
 
