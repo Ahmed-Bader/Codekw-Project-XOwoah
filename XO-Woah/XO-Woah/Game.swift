@@ -19,10 +19,9 @@ struct Game: View {
     var body: some View {
         
         VStack {
-            //so who's turn is it?
+            //so who's turn is it? [who plays(s)]
             Text(whoPlays(s: size))
                 .font(.largeTitle)
-            
             /*  switch playerTurn {
              case .one:
              Text("X's turn!")
@@ -37,6 +36,7 @@ struct Game: View {
              Text("🥸's turn!")
              .font(.largeTitle)
              }*/
+            
             VStack(spacing: 10){
                 ForEach(0..<size){ r in
                     HStack(spacing: 10){
@@ -45,41 +45,14 @@ struct Game: View {
                                     {
                                         if fields [r][c].enabled
                                         {
-                                            //fields[r][c].player = playerTurn
-                                            switch playerTurn {
-                                            case .one:
-                                                fields[r][c].player = "X"
-                                                p = fields[r][c].player
-                                            case .two:
-                                                fields[r][c].player = "O"
-                                                p = fields[r][c].player
-                                            case .three:
-                                                fields[r][c].player = "🤓"
-                                                p = fields[r][c].player
-                                            case .four:
-                                                fields[r][c].player = "🥸"
-                                                p = fields[r][c].player
-                                            }
+                                            //method whoMarks(s: size,i: r,j: c) here
+                                            whoMarks(s: size, i: r, j: c)
                                             drawCounter += 1
                                             checkWinner()
                                             if winStatus == false
                                             {
-                                                //this needs to change for multi
-                                                //playerTurn = playerTurn == "X" ? "O" : "X"
-                                                switch playerTurn {
-                                                case .one:
-                                                    p = "O"
-                                                    playerTurn = .two
-                                                case .two:
-                                                    p = "🤓"
-                                                    playerTurn = .three
-                                                case .three:
-                                                    p = "🥸"
-                                                    playerTurn = .four
-                                                case .four:
-                                                    p = "X"
-                                                    playerTurn = .one
-                                                }
+                                                //player switcher here
+                                                playerSwitcher(s: size)
                                                 fields[r][c].enabled = false
                                             }else{
                                                 endGame()
@@ -130,7 +103,7 @@ struct Game: View {
         
     }
     
-    // INCOMING FUNCTIONS!!-----------------------------
+//  INCOMING FUNCTIONS!!-----------------------------
     func whoPlays(s: Int) -> String {
         if s == 3 {
             switch playerTurn {
@@ -169,21 +142,89 @@ struct Game: View {
     
     func whoMarks(s: Int,i: Int,j: Int){
         if s == 3 {
-            
+            switch playerTurn {
+            case .one:
+                fields[i][j].player = "X"
+                p = fields[i][j].player
+            case .two:
+                fields[i][j].player = "O"
+                p = fields[i][j].player
+            default:
+                print("Something is wrong with whoMarks size 3")
+            }
         } else if s == 4 {
-            
+            switch playerTurn {
+            case .one:
+                fields[i][j].player = "X"
+                p = fields[i][j].player
+            case .two:
+                fields[i][j].player = "O"
+                p = fields[i][j].player
+            case .three:
+                fields[i][j].player = "🤓"
+                p = fields[i][j].player
+            default:
+                print("Something is wrong with whoMarks size 4")
+            }
         } else if s == 5 {
-            
+            switch playerTurn {
+            case .one:
+                fields[i][j].player = "X"
+                p = fields[i][j].player
+            case .two:
+                fields[i][j].player = "O"
+                p = fields[i][j].player
+            case .three:
+                fields[i][j].player = "🤓"
+                p = fields[i][j].player
+            case .four:
+                fields[i][j].player = "🥸"
+                p = fields[i][j].player
+            }
         }
     }
     
-    func playerSwitcher(s: Int,i: Int,j: Int){
+    func playerSwitcher(s: Int){
         if s == 3 {
-            
+            switch playerTurn {
+            case .one:
+                p = "O"
+                playerTurn = .two
+            case .two:
+                p = "X"
+                playerTurn = .one
+            default:
+                print("Something went wrong with player switcher size 3")
+            }
         } else if s == 4 {
-            
+            switch playerTurn {
+            case .one:
+                p = "O"
+                playerTurn = .two
+            case .two:
+                p = "🤓"
+                playerTurn = .three
+            case .three:
+                p = "X"
+                playerTurn = .one
+            default:
+                print("Something went wrong with player switcher size 4")
+            }
         } else if s == 5 {
-            
+            switch playerTurn {
+            case .one:
+                p = "O"
+                playerTurn = .two
+            case .two:
+                p = "🤓"
+                playerTurn = .three
+            case .three:
+                p = "🥸"
+                playerTurn = .four
+            case .four:
+                p = "X"
+                playerTurn = .one
+            }
         }
     }
     
@@ -204,6 +245,7 @@ struct Game: View {
             if rowCheck || colCheck {
                 winner = ("\(p) is the winner!")
                 winStatus = true
+                return;
             }
         }
         
@@ -245,8 +287,9 @@ struct Game: View {
         if d1 || d2 {
             winner = ("\(p) is the winner!")
             winStatus = true
+            return;
         } else if drawCounter == drawLimit {
-            winner = "Draw :("
+            winner = "It's a Draw :("
             winStatus = true
         }
     }
@@ -281,14 +324,49 @@ enum PlayerTurn {
 }
 
 
-struct Game_Previews: PreviewProvider {
+/*struct Game_Previews: PreviewProvider {
     static var previews: some View {
         Game(size: 3, drawLimit: 9)
     }
-}
+}*/
 
 
 // size should be 120, 100, 70 for block frames
+
+
+
+/*fields[r][c].player = playerTurn <== for putting mark
+ switch playerTurn {
+case .one:
+    fields[r][c].player = "X"
+    p = fields[r][c].player
+case .two:
+    fields[r][c].player = "O"
+    p = fields[r][c].player
+case .three:
+    fields[r][c].player = "🤓"
+    p = fields[r][c].player
+case .four:
+    fields[r][c].player = "🥸"
+    p = fields[r][c].player
+}
+ 
+ playerTurn = playerTurn == "X" ? "O" : "X" <== for changing mark
+ switch playerTurn {
+ case .one:
+     p = "O"
+     playerTurn = .two
+ case .two:
+     p = "🤓"
+     playerTurn = .three
+ case .three:
+     p = "🥸"
+     playerTurn = .four
+ case .four:
+     p = "X"
+     playerTurn = .one
+ }
+ */
 
 /* here lies the notes,failed tests and code snippets of my dark depressing trials at making the code quality better...
  check each row [0][c] [1][c] [2][c]

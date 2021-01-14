@@ -21,10 +21,10 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .background(Color.blue)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }).navigationTitle("X-O-Woah!")
+                    }).navigationTitle("Welcome to X-O-Woah!")
                 
                 NavigationLink(
-                    destination: /*@START_MENU_TOKEN@*/Text("Destination")/*@END_MENU_TOKEN@*/,
+                    destination: Game(size: 4, drawLimit: 16),
                     label: {
                         Text("3-players")
                             .font(.largeTitle)
@@ -36,7 +36,7 @@ struct ContentView: View {
                     })
                 
                 NavigationLink(
-                    destination: /*@START_MENU_TOKEN@*/Text("Destination")/*@END_MENU_TOKEN@*/,
+                    destination: Game(size: 5, drawLimit: 25),
                     label: {
                         Text("4-players")
                             .font(.largeTitle)
