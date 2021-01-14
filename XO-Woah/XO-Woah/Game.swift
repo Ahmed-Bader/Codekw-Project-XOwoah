@@ -19,10 +19,8 @@ struct Game: View {
     var body: some View {
         
         VStack {
-            //so who's turn is it? [who plays(s)]
-            Text(whoPlays(s: size))
-                .font(.largeTitle)
-            /*  switch playerTurn {
+            /* so who's turn is it? [who plays(s)]
+             switch playerTurn {
              case .one:
              Text("X's turn!")
              .font(.largeTitle)
@@ -35,7 +33,9 @@ struct Game: View {
              case .four:
              Text("🥸's turn!")
              .font(.largeTitle)
-             }*/
+             } */
+            Text(whoPlays(s: size))
+                .font(.largeTitle)
             
             VStack(spacing: 10){
                 ForEach(0..<size){ r in
@@ -51,7 +51,6 @@ struct Game: View {
                                             checkWinner()
                                             if winStatus == false
                                             {
-                                                //player switcher here
                                                 playerSwitcher(s: size)
                                                 fields[r][c].enabled = false
                                             }else{
@@ -70,7 +69,7 @@ struct Game: View {
                         }
                     }
                 }
-            }.background(Color.gray) // if i put it black YOU WON'T SEE THE TEXT!
+            }.background(Color.gray)
             .padding()
             
             if winner != "" {
@@ -103,7 +102,17 @@ struct Game: View {
         
     }
     
-//  INCOMING FUNCTIONS!!-----------------------------
+    /*Note: check if i can swap out the if statements
+     instead of if {switch stuff}
+     have one switch and in the cases for player 3 and 4 (.three, .four)
+     we put if statements inside them for how to proceed in the switch
+     so in case of 2 players case .two:
+     instead of having a huge if statement with switches, we can have if the size = 3 go back to .one
+     else if size = 4 go to .three and have .three go back to .one
+     else if size = 5 go to .four and i think i don't need an if statement there for that case*/
+    
+//  INCOMING FUNCTIONS!!-------------------------------------------
+    
     func whoPlays(s: Int) -> String {
         if s == 3 {
             switch playerTurn {
@@ -254,12 +263,6 @@ struct Game: View {
         for i in (0..<size) {
             d1 = d1 && fields[i][i].player == p
         }
-        
-        /* let d1 = fields[0][0].player == playerTurn
-         && fields[1][1].player == playerTurn
-         && fields[2][2].player == playerTurn
-         && fields[3][3].player == playerTurn
-         && fields[4][4].player == playerTurn*/
         
         //checking the second diagonal right->left
         var d2 = true
