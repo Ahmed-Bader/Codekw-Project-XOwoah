@@ -18,87 +18,91 @@ struct Game: View {
     @State var winStatus = false
     var body: some View {
         
-        VStack {
-            /* so who's turn is it? [who plays(s)]
-             switch playerTurn {
-             case .one:
-             Text("X's turn!")
-             .font(.largeTitle)
-             case .two:
-             Text("O's turn!")
-             .font(.largeTitle)
-             case .three:
-             Text("🤓's turn!")
-             .font(.largeTitle)
-             case .four:
-             Text("🥸's turn!")
-             .font(.largeTitle)
-             } */
-            Text(whoPlays(s: size))
-                .font(.largeTitle)
-            
-            VStack(spacing: 10){
-                ForEach(0..<size){ r in
-                    HStack(spacing: 10){
-                        ForEach(0..<size){ c in
-                            Button(action:
-                                    {
-                                        if fields [r][c].enabled
+        ZStack {
+            Color.yellow
+                .ignoresSafeArea()
+            VStack {
+                /* so who's turn is it? [who plays(s)]
+                 switch playerTurn {
+                 case .one:
+                 Text("X's turn!")
+                 .font(.largeTitle)
+                 case .two:
+                 Text("O's turn!")
+                 .font(.largeTitle)
+                 case .three:
+                 Text("🤓's turn!")
+                 .font(.largeTitle)
+                 case .four:
+                 Text("🥸's turn!")
+                 .font(.largeTitle)
+                 } */
+                Text(whoPlays(s: size))
+                    .font(.largeTitle)
+                
+                VStack(spacing: 10){
+                    ForEach(0..<size){ r in
+                        HStack(spacing: 10){
+                            ForEach(0..<size){ c in
+                                Button(action:
                                         {
-                                            //method whoMarks(s: size,i: r,j: c) here
-                                            whoMarks(s: size, i: r, j: c)
-                                            drawCounter += 1
-                                            checkWinner()
-                                            if winStatus == false
+                                            if fields [r][c].enabled
                                             {
-                                                playerSwitcher(s: size)
-                                                fields[r][c].enabled = false
-                                            }else{
-                                                endGame()
+                                                //method whoMarks(s: size,i: r,j: c) here
+                                                whoMarks(s: size, i: r, j: c)
+                                                drawCounter += 1
+                                                checkWinner()
+                                                if winStatus == false
+                                                {
+                                                    playerSwitcher(s: size)
+                                                    fields[r][c].enabled = false
+                                                }else{
+                                                    endGame()
+                                                }
+                                                
                                             }
-                                            
-                                        }
-                                    },label:
-                                        {
-                                            Text(fields[r][c].player)
-                                                .font(.system(size: 60))
-                                                .foregroundColor(.black)
-                                                .frame(width: 70, height: 70, alignment: .center)
-                                                .background(Color.white)
-                                        })
+                                        },label:
+                                            {
+                                                Text(fields[r][c].player)
+                                                    .font(.system(size: 60))
+                                                    .foregroundColor(.black)
+                                                    .frame(width: 70, height: 70, alignment: .center)
+                                                    .background(Color.white)
+                                            })
+                            }
                         }
                     }
+                }.background(Color.gray)
+                .padding()
+                
+                if winner != "" {
+                    Text(winner)
+                        .font(.largeTitle)
+                    Button(action: { restartG() },
+                           label:{
+                            Text("Play Again?")
+                                .font(.largeTitle)
+                                .frame(width: 200, height: 70, alignment: .center)
+                                .foregroundColor(.white)
+                                .background(Color.blue)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                           }).padding()
+                }else{
+                    Button(action: { restartG() },
+                           label:{
+                            Text("Reset")
+                                .font(.largeTitle)
+                                .frame(width: 200, height: 70, alignment: .center)
+                                .foregroundColor(.white)
+                                .background(Color.blue)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                           }).padding()
                 }
-            }.background(Color.gray)
-            .padding()
-            
-            if winner != "" {
-                Text(winner)
-                    .font(.largeTitle)
-                Button(action: { restartG() },
-                       label:{
-                        Text("Play Again?")
-                            .font(.largeTitle)
-                            .frame(width: 200, height: 70, alignment: .center)
-                            .foregroundColor(.white)
-                            .background(Color.blue)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                       }).padding()
-            }else{
-                Button(action: { restartG() },
-                       label:{
-                        Text("Reset")
-                            .font(.largeTitle)
-                            .frame(width: 200, height: 70, alignment: .center)
-                            .foregroundColor(.white)
-                            .background(Color.blue)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                       }).padding()
-            }
-        }.background(Color.yellow)
-        .alert(isPresented: $winStatus, content: {
-            Alert(title: Text(winner))
+            }//.background(Color.yellow)
+            .alert(isPresented: $winStatus, content: {
+                Alert(title: Text(winner))
         })
+        }
         
     }
     
@@ -331,7 +335,7 @@ enum PlayerTurn {
     static var previews: some View {
         Game(size: 3, drawLimit: 9)
     }
-}*/
+} */
 
 
 // size should be 120, 100, 70 for block frames

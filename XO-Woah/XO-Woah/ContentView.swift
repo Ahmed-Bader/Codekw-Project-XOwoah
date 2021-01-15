@@ -12,6 +12,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack{
+                Spacer()
                 NavigationLink(
                     destination: Game(size: 3, drawLimit: 9),
                     label: {
@@ -45,6 +46,8 @@ struct ContentView: View {
                             .background(Color.blue)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     })
+                Spacer()
+                Spacer()
             }
         }
     }
